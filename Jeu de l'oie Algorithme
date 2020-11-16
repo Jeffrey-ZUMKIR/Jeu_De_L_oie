@@ -1,0 +1,58 @@
+ALGORITHME: Le jeu de l'oie
+
+//BUT:    Reproduire le jeu de l'oie
+//ENTREE: /
+//SORTIE: Les jets de dés, la case actuelle du joueur, la victoire
+
+VAR
+	joueur:ENTIER
+
+DEBUT
+	joueur <- 0
+	TANTQUE (joueur <> 66) FAIRE
+		joueur <- deplacement(joueur)
+
+		joueur <- checkPlacement(joueur)
+
+		ECRIRE "Case : ",joueur
+	FINTANTQUE
+	ECRIRE "Victoire"
+FIN
+
+FONCTION deplacement(joueur):ENTIER
+	VAR
+		som,dice1,dice2:ENTIER
+
+	DEBUT
+		RANDOM
+		dice1 <- RANDOM(1,6)
+		ECRIRE "Dice 1 : ",dice1
+
+		dice2 <- RANDOM(1,6)
+		ECRIRE "Dice 2 : ",dice2
+
+		som=dice1+dice2
+
+		SI ((joueur MOD 9 = 0)ET(joueur<>0)ET(joueur<>63)) ALORS
+			som <- som*2
+		FINSI
+		deplacement <- som
+	FIN
+
+
+FONCTION checkPlacement(joueur):ENTIER
+	VAR
+		placement:ENTIER
+
+	DEBUT
+		placement <- joueur
+
+		SI (placement > 66) ALORS
+			placement <- 66-(placement-66)
+		FINSI
+
+		SI (placement = 58) ALORS
+			placement <- 0
+		FINSI
+		checkPlacement <- placement
+	FIN

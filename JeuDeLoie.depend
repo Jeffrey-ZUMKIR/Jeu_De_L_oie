@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1605286842 source:d:\home\documents\ludus f2\algo\nouveau dossier\jeudeloie\main.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+
