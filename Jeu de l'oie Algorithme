@@ -4,12 +4,18 @@ ALGORITHME: Le jeu de l'oie
 //ENTREE: /
 //SORTIE: Les jets de dés, la case actuelle du joueur, la victoire
 
+CONSTANTE
+	LOWROLE <- 1 	:ENTIER
+	HIGHROLE <- 6	:ENTIER
+	FINISHLINE <- 66:ENTIER
+	DEADCASE <- 58 	:ENTIER
+
 VAR
 	joueur:ENTIER
 
 DEBUT
 	joueur <- 0
-	TANTQUE (joueur <> 66) FAIRE
+	TANTQUE (joueur <> FINISHLINE) FAIRE
 		joueur <- deplacement(joueur)
 
 		joueur <- checkPlacement(joueur)
@@ -25,15 +31,16 @@ FONCTION deplacement(joueur):ENTIER
 
 	DEBUT
 		RANDOM
-		dice1 <- RANDOM(1,6)
+		TANTQUE (((dice1<LOWROLE) OU (dice1>HIGHROLE)) ET ((dice2<LOWROLE) OU (dice2>HIGHROLE))) ALORS
+			dice1 <- RANDOM(1,6)
+			dice2 <- RANDOM(1,6)
+		FINTANTQUE
 		ECRIRE "Dice 1 : ",dice1
-
-		dice2 <- RANDOM(1,6)
 		ECRIRE "Dice 2 : ",dice2
 
 		som=dice1+dice2
 
-		SI ((joueur MOD 9 = 0)ET(joueur<>0)ET(joueur<>63)) ALORS
+		SI (((joueur+som) MOD 9 = 0) ET (joueur+som<63)) ALORS
 			som <- som*2
 		FINSI
 		deplacement <- som
@@ -47,11 +54,11 @@ FONCTION checkPlacement(joueur):ENTIER
 	DEBUT
 		placement <- joueur
 
-		SI (placement > 66) ALORS
-			placement <- 66-(placement-66)
+		SI (placement > FINISHLINE) ALORS
+			placement <- FINISHLINE-(placement-FINISHLINE)
 		FINSI
 
-		SI (placement = 58) ALORS
+		SI (placement = DEADCASE) ALORS
 			placement <- 0
 		FINSI
 		checkPlacement <- placement
